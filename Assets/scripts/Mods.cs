@@ -11,6 +11,7 @@ public class Mods : MonoBehaviour
     SpriteRenderer sprite;
     Movement movement;
     float tempSpeed;
+    float tempJumpForce;
     Vector2 defaultScale;
     // Start is called before the first frame update
     void Start()
@@ -20,6 +21,7 @@ public class Mods : MonoBehaviour
         movement = GetComponent<Movement>();
         defaultScale = transform.localScale;
         tempSpeed = movement.moveSpeed;
+        tempJumpForce = movement.jumpForce;
     }
     private void Update()
     {
@@ -97,10 +99,12 @@ public class Mods : MonoBehaviour
     }
     void shrink()
     {
+        movement.jumpForce = tempJumpForce - tempJumpForce * 0.3f;
         transform.localScale = new Vector2(Mathf.Lerp(defaultScale.x, defaultScale.x * 0.5f, 1f), Mathf.Lerp(defaultScale.y,defaultScale.y*0.5f,1f));
     }
     void extend()
     {
-        transform.localScale = new Vector2(Mathf.Lerp(defaultScale.x * 0.5f, defaultScale.x, 1f), Mathf.Lerp(defaultScale.y * 0.5f, defaultScale.y,  1f));
+        movement.jumpForce = tempJumpForce;
+        transform.localScale = new Vector2(Mathf.Lerp(defaultScale.x * 0.5f, defaultScale.x, 1f), Mathf.Lerp(defaultScale.y * 0.5f, defaultScale.y, 1f));
     }
 }
